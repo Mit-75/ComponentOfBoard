@@ -29,11 +29,17 @@ struct ContentView: View {
                     .background(.blue, in: .buttonBorder)
                     .foregroundStyle(.white)
                     .font(.system(.title, design: .rounded, weight: .heavy))
+                
                 Text(displayName)
                     .frame(width: 300, height: 40)
                     .font(.system(.title, design: .rounded, weight: .heavy))
                     .foregroundStyle(.white)
-                    .overlay(RoundedRectangle(cornerRadius: 10).stroke(.white, lineWidth: 1))
+                    .overlay(
+                        RoundedRectangle(
+                            cornerRadius: 10
+                        ).stroke(.white, lineWidth: 1)
+                    )
+                
                 Slider(
                     value: $sliderValue,
                     in: 1...255,
@@ -62,9 +68,9 @@ struct ContentView: View {
         }
     }
     
+    
     private func getText() {
         if let _ = Double(userName) {
-            //userName = ""
             isPresented.toggle()
             return
         } else {
