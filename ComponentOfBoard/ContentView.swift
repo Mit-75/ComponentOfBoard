@@ -10,6 +10,8 @@ import SwiftUI
 struct ContentView: View {
     @State private var sliderValue = 100.0
     @State private var userName = ""
+    @State private var displayName = ""
+    @State private var isPresented = false
     
     
     var body: some View {
@@ -23,12 +25,12 @@ struct ContentView: View {
                     .foregroundStyle(.tint)
                 
                 Text(sliderValue.formatted())
-                    .frame(width: 150, height: 40)
+                    .frame(width: 300, height: 40)
                     .background(.blue, in: .buttonBorder)
                     .foregroundStyle(.white)
                     .font(.system(.title, design: .rounded, weight: .heavy))
-                Text("№1")
-                    .frame(width: 150, height: 40)
+                Text(displayName)
+                    .frame(width: 300, height: 40)
                     .font(.system(.title, design: .rounded, weight: .heavy))
                     .foregroundStyle(.white)
                     .overlay(RoundedRectangle(cornerRadius: 10).stroke(.white, lineWidth: 1))
@@ -39,7 +41,8 @@ struct ContentView: View {
                 )
                 TextField("Enter yor name", text: $userName)
                     .textFieldStyle(.roundedBorder)
-                Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/) {
+                
+                Button(action: getText) {
                     Text("Done")
                         .font(.title)
                         .fontWeight(.medium)
@@ -48,10 +51,25 @@ struct ContentView: View {
                 .frame(minWidth: 150, minHeight: 60)
                 .background(.gray)
                 .clipShape(.rect(cornerRadius: 10))
-                
+                .alert("Wrong format", isPresented: $isPresented) {
+                    Button("Ok") {userName = ""}
+                } message: {
+                    Text("Enter your name")
+                }
                 Spacer()
             }
             .padding(20)
+        }
+    }
+    
+    private func getText() {
+        if let _ = Double(userName) {
+            //userName = ""
+            isPresented.toggle()
+            return
+        } else {
+            displayName = userName
+            userName = ""
         }
     }
 }
